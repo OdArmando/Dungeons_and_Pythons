@@ -1,59 +1,75 @@
-from useful_function import *
-from Enemy import *
-from Player import *
+"""This module contains all the methods and classes called in the program"""
+import random
+from useful_function import my_print, clear_screen
+from enemy import Goblin, Troll, Orc
+from player import Knight, Cleric, Wizard
 import winsound
 
 
 class Start:
-
+    """Contains start game and in game functions and instructions"""
     @staticmethod
     def stop_sound():
+        """Static method for stopping music in the game"""
         winsound.PlaySound(None, winsound.SND_PURGE)
 
     @staticmethod
     def play_sound_intro():
+        """Start Intro Music in the game"""
         winsound.PlaySound(r'C:\Dungeons_and_Pythons\Main_Menu.wav',
                            winsound.SND_ASYNC + winsound.SND_LOOP)
 
     @staticmethod
     def play_sound_exploring():
+        """Play Exploring music scene"""
         winsound.PlaySound(r'C:\Dungeons_and_Pythons\Exploring.wav',
                            winsound.SND_ASYNC + winsound.SND_LOOP)
 
     @staticmethod
     def play_sound_fight():
+        """Play Fight music scene"""
         winsound.PlaySound(r'C:\Dungeons_and_Pythons\BattleFinal.wav',
                            winsound.SND_ASYNC + winsound.SND_LOOP)
 
     @staticmethod
     def intro_message():
+        """Start Game Intro message"""
         print(
             'Welcome, stranger!\n'
-            'Here in Osgiliath you are going to fight all sorts of creatures, conquer dungeons and lands!\n'
+            'Here in Osgiliath you are going to fight all sorts of creatures,\n'
+            'Conquer dungeons and lands!\n'
             'In a country where magic rules anything is possible.\n'
             'It all depends on what you want to fight this creatures with,\n'
             'Is it magic, or brute force?\n')
 
     @staticmethod
     def wizard_message():
-        print('The wizards are the first people who learned to use magic in order to protect the people,\n'
+        """Wizard class intro message"""
+        print('The wizards are the first people who learned to use magic,\n '
+              'The magic was used in order to protect the people,\n'
               'Their powers are great,\n '
-              'They have powerful protecting spells but can use destructive force when is needed!\n')
+              'They have powerful protecting spells,\n '
+              'But can use destructive force when is needed!\n')
 
     @staticmethod
     def knight_message():
-        print('Great choice warrior, you chose the original fighters for the common people,\n'
+        """Knight class intro message"""
+        print('Great choice warrior!,\n'
+              'You chose the original fighters for the common people,\n'
               'Knights are brave and they do not run from the danger\n'
               'They use their great swords and brute force.\n')
 
     @staticmethod
     def cleric_message():
+        """Cleric class intro message"""
         print('The clerics are good hearted magicians\n'
               'They devoted all their life gaining powers to protect the people,\n'
-              'A healer is in great demand in a journey where danger is waiting at every stone in Osgiliath lands!.\n')
+              'A healer is in great demand in this journey.\n '
+              'Danger is waiting at every stone in Osgiliath lands!.\n')
 
     @staticmethod
     def play_again():
+        """Ask player is wants to play again function"""
         user_answer = input("""Do you want to play again?
         Press \'y\' to play or press any key to leave the game\n""")
         clear_screen()
@@ -68,39 +84,40 @@ class Start:
 
     @staticmethod
     def ask_type_of_char(user):
+        """Ask user to pick a character"""
         if user == '1':
             Start.wizard_message()
         elif user == '2':
             Start.knight_message()
-        # else:
-        #     Start.cleric_message()
 
     @staticmethod
     def choosing_path(user):
+        """Ask player to choose a path to explore"""
         if user == '1':
             print('''
             A lot of brave heroes entered in this forest but only a few came back!
             Strange creatures stalk you so be aware!
             In this forest you can find hidden chests with powerful items 
-            so be sure to collect them
+            So be sure to collect them!
             ''')
         elif user == '2':
             print('''
-            This town is now ruled by some scary creatures and all humans were kill by them.
+            This town is now ruled by some scary creatures and humans are killed by them.
             So keep an eye out!
             In this town you can find hidden chests with powerful items 
-            so be sure to collect them
+            So be sure to collect them!
             ''')
         elif user == '3':
             print('''
             Dungeons are probably the scariest and you have to be aware at every sound,
-            otherwise you might be taken by surprise.
+            Otherwise you might be taken by surprise.
             In this dungeon you can find hidden chests with powerful items 
-            so be sure to collect them
+            So be sure to collect them!
             ''')
 
     @staticmethod
     def action():
+        """Info message about path choosing and finding a chest, player is informed if it wants to open it"""
         user_path = input('''Now let's go to destroy our enemies.
                         You have arrived on a crossroad with 3 paths and you have to choose one!
                         1. To the forest
@@ -123,6 +140,7 @@ class Start:
 
     @staticmethod
     def chose_enemy():
+        """Player is informed about the type of the enemy he encountered"""
         goblin = Goblin()
         orc = Orc()
         troll = Troll()
@@ -135,6 +153,7 @@ class Start:
 
     @staticmethod
     def player_no_chest(char):
+        """Function in case player is not opening the chest"""
         clear_screen()
         char.gear_up()
         print(f'Your power is {char.power} and your armor is {char.defence}\n')
@@ -143,6 +162,7 @@ class Start:
 
     @staticmethod
     def player_open_chest(char):
+        """Function if the player opens chest and informed about new power"""
         clear_screen()
         char.open_chest()
         print(f'You have found a {char.weapon_type} with power of {char.weapon} and a {char.armor_type} '
@@ -154,6 +174,7 @@ class Start:
 
     @staticmethod
     def battle(enemy, char):
+        """The battle information, damage, life, hits"""
         char.attack(enemy)
         my_print(f'You are attacking with a power of {char.power}, your amor has {char.defence} '
                  f'durability and {char.hp} HP left\n')
@@ -170,6 +191,7 @@ class Start:
 
     @staticmethod
     def fighting_scene(char):
+        """The fighting scene, start fight, music during the fight, """
         clear_screen()
         Start.stop_sound()
         Start.play_sound_exploring()
@@ -190,6 +212,7 @@ class Start:
 
     @staticmethod
     def game():
+        """Start the game, player choosing name, character selection"""
         user_name = input('Enter your name brave warrior: ')
         clear_screen()
         while True:
@@ -214,11 +237,12 @@ class Start:
             else:
                 if user_char == '3':
                     cleric = Cleric(user_name)
-                    print(f'Thank you Good {cleric.name} for choosing to protect us')
+                    print(f'Thank you Good Cleric {cleric.name} for choosing to protect us')
                     Start.fighting_scene(cleric)
 
     @staticmethod
     def game_intro():
+        """Intro, ask player if he wants to play or not, welcome and goodbye message"""
         Start.play_sound_intro()
         Start.intro_message()
         user = input('''Do you want to play? 
